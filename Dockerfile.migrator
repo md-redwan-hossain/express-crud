@@ -1,0 +1,8 @@
+FROM node:lts-alpine3.19
+LABEL maintainer="Md. Redwan Hossain"
+WORKDIR /dbmate-migrator
+RUN mkdir db
+COPY db /dbmate-migrator/db
+COPY migrator.py .
+RUN apk update && apk add python3 && apk add bash
+RUN bash -c "npm install -g dbmate"

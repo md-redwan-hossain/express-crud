@@ -1,0 +1,31 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "ts-node app.ts",
+    "migrator:new": "npx dbmate --wait new",
+    "migrator:apply": "npx dbmate --wait migrate --strict",
+    "migrator:rollback": "npx dbmate --wait rollback",
+    "migrator:list": "npx dbmate --wait status",
+    "migrator:schema-force-push": "npx dbmate --wait load"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^9.4.0",
+    "body-parser": "^1.20.2",
+    "dbmate": "^2.11.0",
+    "dotenv": "^16.4.1",
+    "drizzle-orm": "^0.29.3",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.9",
+    "@types/express": "^4.17.21",
+    "drizzle-kit": "^0.20.14",
+    "typescript": "^5.3.3"
+  }
+}
