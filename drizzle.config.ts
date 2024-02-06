@@ -1,8 +1,8 @@
 import type { Config } from "drizzle-kit";
 
 export default {
-  schema: "./drizzle/schema.ts",
-  out: "./drizzle",
+  schema: "./src/shared/drizzle/schema.ts",
+  out: "./src/shared/drizzle",
   driver: "better-sqlite",
   strict: true,
   verbose: true,

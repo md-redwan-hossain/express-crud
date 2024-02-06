@@ -3,7 +3,7 @@ import { SQL, and, asc, desc, eq, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { Request, Response } from "express";
 import { validationResult } from "express-validator";
-import { books } from "../../../drizzle/schema";
+import { books } from "../../shared/drizzle/schema";
 import { HttpStatus } from "../../shared/http-status";
 const sqlite = new Database("db.sqlite3");
 const db = drizzle(sqlite);

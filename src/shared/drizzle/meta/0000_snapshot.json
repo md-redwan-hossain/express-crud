@@ -28,7 +28,7 @@
           "name": "id",
           "type": "integer",
           "primaryKey": true,
-          "notNull": false
+          "notNull": true
         },
         "title": {
           "autoincrement": false,

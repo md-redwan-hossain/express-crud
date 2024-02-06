@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "build": "npx tsc",
-    "start": "ts-node app.ts",
+    "build": "tsc --project tsconfig.build.json",
+    "start:dev": "ts-node app.ts",
     "migrator:new": "npx dbmate --wait new",
     "migrator:apply": "npx dbmate --wait migrate --strict",
     "migrator:rollback": "npx dbmate --wait rollback",
