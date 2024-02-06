@@ -1,10 +1,12 @@
-FROM node:lts-slim
+FROM node:lts
 LABEL maintainer="Md. Redwan Hossain"
+RUN yarn config set network-timeout 500000 -g
+RUN bash -c "yarn global add dbmate"
 USER node
 WORKDIR /node-app
 COPY --chown=node:node package.json yarn.lock ./
 RUN bash -c "yarn install"
 COPY --chown=node:node . .
 RUN bash -c "yarn run build"
-RUN bash -c "npx drizzle-kit push:sqlite"
+RUN bash -c "python3 migrator.py"
 EXPOSE 8000
