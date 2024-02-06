@@ -48,11 +48,11 @@ export async function getAllBooks(req: Request, res: Response) {
   const where: SQL[] = [];
 
   if (req.query["author"]) {
-    where.push(like(books.author, req.query["author"].toString()));
+    where.push(like(books.author, req.query["author"] as string));
   } else if (req.query["title"]) {
-    where.push(like(books.title, req.query["title"].toString()));
+    where.push(like(books.title, req.query["title"] as string));
   } else if (req.query["genre"]) {
-    where.push(like(books.genre, req.query["genre"].toString()));
+    where.push(like(books.genre, req.query["genre"] as string));
   }
 
   const result = db
