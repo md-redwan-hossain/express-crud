@@ -1,15 +1,5 @@
 version: "3"
 services:
-  # dbmate_migrator:
-  #   env_file:
-  #     - .env
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.migrator
-  #   volumes:
-  #     - "app_data_devsfleet:/node-app"
-  #   command: [ "python3", "migrator.py" ]
-
   app:
     env_file:
       - .env
@@ -19,9 +9,6 @@ services:
       - "8000:8000"
     volumes:
       - "app_data_devsfleet:/node-app"
-    # depends_on:
-    #   dbmate_migrator:
-    #     condition: service_completed_successfully
     command: [ "node", "./dist/app.js" ]
 
 volumes:

@@ -1,6 +1,6 @@
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import express, { Request, Response, Router } from "express";
+import express from "express";
 import { booksRouter } from "./books.controller";
 dotenv.config();
 
@@ -14,5 +14,5 @@ const port = process.env.PORT;
 app.use("/api/books", booksRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`app listening on port ${port}`);
 });
