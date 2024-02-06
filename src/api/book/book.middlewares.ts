@@ -2,7 +2,6 @@ import Database from "better-sqlite3";
 import { SQL, and, asc, desc, eq, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";
 import { Request, Response } from "express";
-import { validationResult } from "express-validator";
 import { books } from "../../shared/drizzle/schema";
 import { HttpStatus } from "../../shared/http-status";
 const sqlite = new Database("db.sqlite3");
@@ -16,11 +15,6 @@ export enum SortField {
 }
 
 export async function createBook(req: Request, res: Response) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() }).end();
-  }
-
   const dataForInsert: typeof books.$inferInsert = {
     id: req.body["id"],
     title: req.body["title"],
@@ -42,22 +36,15 @@ export async function getOneBook(req: Request, res: Response) {
     .from(books)
     .where(eq(books.id, parseInt(uniqueIdentifier)));
 
-  if (!data?.id) {
-    return res
-      .status(HttpStatus.NOT_FOUND)
-      .json({ message: `book with id: ${uniqueIdentifier} was not found` })
-      .end();
-  }
+  if (data?.id) return res.status(HttpStatus.OK).send(data).end();
 
-  res.status(HttpStatus.OK).send(data).end();
+  res
+    .status(HttpStatus.NOT_FOUND)
+    .json({ message: `book with id: ${uniqueIdentifier} was not found` })
+    .end();
 }
 
 export async function getAllBooks(req: Request, res: Response) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() }).end();
-  }
-
   const where: SQL[] = [];
 
   if (req.query["author"]) {
@@ -89,11 +76,6 @@ export async function getAllBooks(req: Request, res: Response) {
 }
 
 export async function updateBook(req: Request, res: Response) {
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() }).end();
-  }
-
   const uniqueIdentifier = req.params["id"];
 
   const [existingData] = await db
