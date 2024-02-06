@@ -9,4 +9,4 @@ CREATE TABLE books (
 );
 
 -- migrate:down
-DROP TABLE IF EXISTS books;
+DROP TABLE books;
