@@ -1,6 +1,5 @@
 FROM node:lts
 LABEL maintainer="Md. Redwan Hossain"
-RUN yarn config set network-timeout 500000 -g
 RUN bash -c "yarn global add dbmate"
 USER node
 WORKDIR /node-app
