@@ -1,11 +1,11 @@
 import express, { Router } from "express";
 import { asyncHandler } from "node-async-handler";
-import { createBook, getAllBooks, getOneBook, updateBook } from "./book.controller";
+import { createBook, getAllBooks, getOneBook, updateBook } from "./book.middlewares";
 import {
   createBookValidationRules,
   queryBookValidationRules,
   updateBookValidationRules
-} from "./book.validator";
+} from "./book.validators";
 
 export const booksRouter: Router = express.Router();
 
