@@ -1,11 +1,10 @@
-FROM node:lts
+FROM node:lts-slim
 LABEL maintainer="Md. Redwan Hossain"
-RUN bash -c "npm install -g dbmate"
 USER node
 WORKDIR /node-app
-COPY --chown=node:node package*.json .
-RUN bash -c "npm install"
+COPY --chown=node:node package.json yarn.lock ./
+RUN bash -c "yarn install"
 COPY --chown=node:node . .
-RUN bash -c "npm run build"
-RUN bash -c "python3 migrator.py"
-EXPOSE 3020
+RUN bash -c "yarn run build"
+RUN bash -c "npx drizzle-kit push:sqlite"
+EXPOSE 8000
