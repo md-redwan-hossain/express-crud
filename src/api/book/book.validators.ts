@@ -1,4 +1,4 @@
-import { body, query, param } from "express-validator";
+import { body, param, query } from "express-validator";
 
 export function createBookValidationRules() {
   return [
@@ -22,10 +22,10 @@ export function updateBookValidationRules() {
 
 export function queryBookValidationRules() {
   return [
-    query("title").trim().isString().isLength({ min: 2, max: 256 }).optional(),
-    query("author").trim().isString().isLength({ min: 2, max: 256 }).optional(),
-    query("genre").trim().isString().isLength({ min: 2, max: 256 }).optional(),
-    query("sort").trim().isIn(["title", "author", "genre", "price"]).optional(),
-    query("order").trim().isIn(["ASC", "DESC"]).optional()
+    query("title").optional().trim().isString().isLength({ min: 2, max: 256 }),
+    query("author").optional().trim().isString().isLength({ min: 2, max: 256 }),
+    query("genre").optional().trim().isString().isLength({ min: 2, max: 256 }),
+    query("sort").optional().trim().isIn(["title", "author", "genre", "price"]),
+    query("order").optional().trim().isIn(["ASC", "DESC"])
   ];
 }
