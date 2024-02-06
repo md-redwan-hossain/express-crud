@@ -20,7 +20,9 @@
     "dbmate": "^2.11.0",
     "dotenv": "^16.4.1",
     "drizzle-orm": "^0.29.3",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "node-async-handler": "^0.0.1"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.9",

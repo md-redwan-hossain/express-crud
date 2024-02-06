@@ -1,13 +1,12 @@
 import Database from "better-sqlite3";
 import { SQL, and, asc, desc, eq, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/better-sqlite3";
-import express, { Request, Response, Router } from "express";
-import { books } from "./drizzle/schema";
-import { HttpStatus } from "./http-status";
+import { Request, Response } from "express";
+import { validationResult } from "express-validator";
+import { books } from "../../../drizzle/schema";
+import { HttpStatus } from "../../shared/http-status";
 const sqlite = new Database("db.sqlite3");
 const db = drizzle(sqlite);
-
-export const booksRouter: Router = express.Router();
 
 export enum SortField {
   title = "title",
@@ -16,7 +15,12 @@ export enum SortField {
   price = "price"
 }
 
-booksRouter.post("", async (req: Request, res: Response) => {
+export async function createBook(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() }).end();
+  }
+
   const dataForInsert: typeof books.$inferInsert = {
     id: req.body["id"],
     title: req.body["title"],
@@ -29,9 +33,9 @@ booksRouter.post("", async (req: Request, res: Response) => {
 
   if (!data?.id) return res.status(HttpStatus.BAD_REQUEST).end();
   res.status(HttpStatus.CREATED).send(data).end();
-});
+}
 
-booksRouter.get("/:id", async (req: Request, res: Response) => {
+export async function getOneBook(req: Request, res: Response) {
   const uniqueIdentifier = req.params["id"];
   const [data] = await db
     .select()
@@ -46,9 +50,14 @@ booksRouter.get("/:id", async (req: Request, res: Response) => {
   }
 
   res.status(HttpStatus.OK).send(data).end();
-});
+}
 
-booksRouter.get("", async (req: Request, res: Response) => {
+export async function getAllBooks(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() }).end();
+  }
+
   const where: SQL[] = [];
 
   if (req.query["author"]) {
@@ -77,9 +86,14 @@ booksRouter.get("", async (req: Request, res: Response) => {
   }
 
   res.status(HttpStatus.OK).json({ books: data }).end();
-});
+}
 
-booksRouter.put("/:id", async (req: Request, res: Response) => {
+export async function updateBook(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() }).end();
+  }
+
   const uniqueIdentifier = req.params["id"];
 
   const [existingData] = await db
@@ -108,4 +122,4 @@ booksRouter.put("/:id", async (req: Request, res: Response) => {
     .returning();
 
   res.status(HttpStatus.OK).send(data).end();
-});
+}
