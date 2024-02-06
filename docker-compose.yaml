@@ -5,11 +5,12 @@ services:
       - .env
     build:
       context: .
+      network: host
     ports:
       - "8000:8000"
     volumes:
       - "app_data_devsfleet:/node-app"
-    command: [ "node", "./dist/app.js" ]
+    command: ["node", "./dist/app.js"]
 
 volumes:
   app_data_devsfleet:
